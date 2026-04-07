@@ -36,7 +36,8 @@ export default async function handler(req, res) {
       generationConfig: { temperature: 0.3, maxOutputTokens: 1024 },
     };
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + apiKey;
+
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -55,7 +56,7 @@ export default async function handler(req, res) {
     let parsed;
     try {
       parsed = JSON.parse(cleaned);
-    } catch {
+    } catch (e) {
       const match = cleaned.match(/\{[\s\S]*\}/);
       if (match) parsed = JSON.parse(match[0]);
       else throw new Error("Could not parse AI response: " + cleaned.slice(0, 200));
